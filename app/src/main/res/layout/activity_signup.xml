@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@drawable/signin2"
+    tools:context=".ui.login.LoginActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="18dip">
+
+        <LinearLayout
+            android:layout_width="321dp"
+            android:layout_height="700dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="49dip"
+            tools:layout_editor_absoluteY="95dip">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:fontFamily="serif"
+                android:text="Sign Up"
+                android:textAlignment="center"
+                android:textColor="#0D3C5F"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="300dip"
+                android:layout_height="200dip"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dip"
+                android:layout_marginBottom="10dip"
+                app:cardCornerRadius="16dip"
+                app:cardElevation="6dip">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="10dip"
+                    android:layout_marginTop="40dip"
+                    android:layout_marginEnd="10dip"
+                    android:layout_marginBottom="40dip"
+                    android:hint="@string/b" />
+
+                <EditText
+                    android:id="@+id/editTextTextPassword"
+                    android:layout_width="wrap_content"
+                    android:autofillHints="name"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginRight="10dp"
+                    android:ems="20"
+                    android:hint="@string/c"
+                    android:inputType="textPassword" />
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="171dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginTop="150dp"
+                    android:layout_marginRight="70dp"
+
+                    android:backgroundTint="#283FBA"
+                    android:text="@string/y" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="Already Have an Acoount?"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:typeface="sans" />
+
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="171dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:backgroundTint="#283FBA"
+                android:text="@string/a" />
+
+            <ImageView
+                android:layout_width="104dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="@integer/material_motion_duration_long_2"
+                android:contentDescription="@string/d"
+                android:src="@mipmap/trade_mark" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/x"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
