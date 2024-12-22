@@ -24,7 +24,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
             android:orientation="vertical"
-            tools:layout_editor_absoluteX="48dip"
+            tools:layout_editor_absoluteX="49dip"
             tools:layout_editor_absoluteY="95dip">
 
             <TextView
