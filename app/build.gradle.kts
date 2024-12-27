@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.wisewallet"
-        minSdk = 18
+        minSdk = 21
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -34,6 +34,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        dataBinding=true
         viewBinding = true
     }
 }
