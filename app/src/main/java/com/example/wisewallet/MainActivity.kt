@@ -23,14 +23,14 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var textDate:TextView
-    private lateinit var buttonDate:Button
+    //private lateinit var textDate:TextView
+    //private lateinit var buttonDate:Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)//initial layout
         //26dec Datepicker
-        textDate=findViewById(R.id.textDate)
+        /*textDate=findViewById(R.id.textDate)
         buttonDate=findViewById(R.id.buttonDate)
         val calendarBox=Calendar.getInstance()
         val dateBox=DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
@@ -42,10 +42,10 @@ class MainActivity : AppCompatActivity() {
         buttonDate.setOnClickListener {
             DatePickerDialog(this,dateBox,calendarBox.get(Calendar.YEAR),calendarBox.get(Calendar.MONTH),calendarBox.get(Calendar.DAY_OF_MONTH)).show()
 
-        }
+        }*/
 
 
-        //25dec fragments and screen switching
+        //25dec Bottom navigation icons to their respective fragments
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId){//1.home fragment
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-        replaceFragment(HomeFragment())
+        replaceFragment(HomeFragment())//default
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -86,12 +86,12 @@ class MainActivity : AppCompatActivity() {
             insets
         }
     }
-    //26dec
-    private fun updateText(calendar: Calendar){
-        val dateFormat="yyyy-MM-dd"
+    //26dec specified to home fragment only
+   /* private fun updateText(calendar: Calendar){
+        val dateFormat="yyyy"
         val simple = SimpleDateFormat(dateFormat, Locale.UK)
         textDate.text = simple.format(calendar.time)
-    }
+    }*/
 //25dec
     private fun replaceFragment(fragment:Fragment){         //new fragment  current fragment
         //replaces current fragment with new fragment

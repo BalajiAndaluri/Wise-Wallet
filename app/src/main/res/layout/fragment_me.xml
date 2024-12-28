@@ -6,24 +6,26 @@
     tools:context=".fragments.Me">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My profile"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textSize="36sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="My profile"
             android:textSize="36sp" />
 
-        <TextView
-            android:textSize="36sp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="My profile" />
-
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </FrameLayout>
