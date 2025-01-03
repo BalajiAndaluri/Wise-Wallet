@@ -1,5 +1,9 @@
 package com.example.wisewallet
-
+import android.Manifest
+import android.content.pm.PackageManager
+import android.content.Intent
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.Button
@@ -17,32 +21,60 @@ import com.example.wisewallet.fragments.HomeFragment
 import com.example.wisewallet.fragments.Me
 import com.example.wisewallet.fragments.More
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.wisewallet.IntroGuide.IntroGuide
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
+    private val permissionId=100
+    private val permissionNameList= arrayListOf(
+        android.Manifest.permission.READ_SMS,
+        android.Manifest.permission.RECEIVE_SMS,
+        android.Manifest.permission.SEND_SMS)
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                // Permission granted, proceed with functionality
+                // ... your code that requires the permission ...
+            } else {
+                // Permission denied, handle appropriately (e.g., show an explanation)
+            }
+        }
     private lateinit var bottomNavigationView: BottomNavigationView
-    //private lateinit var textDate:TextView
-    //private lateinit var buttonDate:Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)//initial layout
-        //26dec Datepicker
-        /*textDate=findViewById(R.id.textDate)
-        buttonDate=findViewById(R.id.buttonDate)
-        val calendarBox=Calendar.getInstance()
-        val dateBox=DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
-            calendarBox.set(Calendar.YEAR,year)
-            calendarBox.set(Calendar.MONTH,month)
-            calendarBox.set(Calendar.DAY_OF_MONTH,day)
-            updateText(calendarBox)//updates text to date selected from a date picker
+        //Asking Message permissions
+        //29dec
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
+            != PackageManager.PERMISSION_GRANTED) {
+            // Permission not granted, request it
+            requestPermissionLauncher.launch(Manifest.permission.READ_SMS)
+        } else {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+                // Permission not granted, request it
+                requestPermissionLauncher.launch(Manifest.permission.SEND_SMS)
+            } else{
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                    // Permission not granted, request it
+                    requestPermissionLauncher.launch(Manifest.permission.RECEIVE_SMS)
+                } else{
+                    val intent = Intent(this, IntroGuide::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+            // Permission already granted, proceed with reading SMS
+            // ... your code to read SMS messages here ...
         }
-        buttonDate.setOnClickListener {
-            DatePickerDialog(this,dateBox,calendarBox.get(Calendar.YEAR),calendarBox.get(Calendar.MONTH),calendarBox.get(Calendar.DAY_OF_MONTH)).show()
-
-        }*/
+        //Date picker moved to HomeFragment
 
 
         //25dec Bottom navigation icons to their respective fragments
