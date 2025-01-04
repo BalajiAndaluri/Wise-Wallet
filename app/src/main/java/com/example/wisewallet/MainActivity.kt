@@ -22,25 +22,27 @@ import com.example.wisewallet.fragments.Me
 import com.example.wisewallet.fragments.More
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.wisewallet.IntroGuide.IntroGuide
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import kotlinx.coroutines.*
 import java.util.Locale
-
 class MainActivity : AppCompatActivity() {
     private val permissionId=100
-    private val permissionNameList= arrayListOf(
-        android.Manifest.permission.READ_SMS,
-        android.Manifest.permission.RECEIVE_SMS,
-        android.Manifest.permission.SEND_SMS)
+    private var hasAllPermissions=true
+    private val permissionNameList= arrayOf(
+        Manifest.permission.READ_SMS,
+        Manifest.permission.RECEIVE_SMS,
+        Manifest.permission.SEND_SMS)
     private val requestPermissionLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
             if (isGranted) {
-                // Permission granted, proceed with functionality
-                // ... your code that requires the permission ...
-            } else {
+            }
+            else {
                 // Permission denied, handle appropriately (e.g., show an explanation)
             }
         }
@@ -48,14 +50,33 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContentView(R.layout.activity_main)//initial layout
-        //Asking Message permissions
-        //29dec
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
+        // Check if all permissions are granted before proceeding
+        //4 jan Not working
+        //permission dialog is not opening
+       /* if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
             != PackageManager.PERMISSION_GRANTED) {
             // Permission not granted, request it
-            requestPermissionLauncher.launch(Manifest.permission.READ_SMS)
-        } else {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_SMS)){
+                val builder = AlertDialog.Builder(this)
+                builder.setMessage("This App require to read and parse messages to get transactions data.")
+                    .setTitle("Permissions Required")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok"){dialog,_->
+                        ActivityCompat.requestPermissions(this,permissionNameList,permissionId)
+                        dialog.dismiss()
+                        builder.show()
+                    }
+
+
+                }
+        }
+        else{
+            ActivityCompat.requestPermissions(this,permissionNameList,permissionId)
+        }*/
+        //29dec
+        /* else {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
                 != PackageManager.PERMISSION_GRANTED) {
                 // Permission not granted, request it
@@ -66,14 +87,12 @@ class MainActivity : AppCompatActivity() {
                     // Permission not granted, request it
                     requestPermissionLauncher.launch(Manifest.permission.RECEIVE_SMS)
                 } else{
-                    val intent = Intent(this, IntroGuide::class.java)
-                    startActivity(intent)
-                    finish()
+                    requestPermissionLauncher.launch(Manifest.permission.READ_SMS)
                 }
             }
             // Permission already granted, proceed with reading SMS
             // ... your code to read SMS messages here ...
-        }
+        }*/
         //Date picker moved to HomeFragment
 
 

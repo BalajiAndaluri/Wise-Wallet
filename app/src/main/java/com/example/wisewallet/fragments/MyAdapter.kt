@@ -15,10 +15,16 @@ class MyAdapter(
     }
 
     override fun createFragment(position: Int): Fragment {
-        return if (position==0)
-            ExpenseTab()
-        else
-            IncomeTab()
+        return when(position){
+            0->{
+                ExpenseTab()
+            }
+            1->{
+                IncomeTab()
+            }
+            else->
+                ExpenseTab()
+        }
     }
 
 }
