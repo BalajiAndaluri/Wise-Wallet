@@ -30,7 +30,9 @@ import java.util.Calendar
 import kotlinx.coroutines.*
 import java.util.Locale
 class MainActivity : AppCompatActivity() {
-    private val permissionId=100
+    private val permissionId_read=100
+    private val permissionId_receive=101
+    private val permissionId_send=102
     private var hasAllPermissions=true
     private val permissionNameList= arrayOf(
         Manifest.permission.READ_SMS,
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_main)//initial layout
+        requestPermissionLauncher.launch(Manifest.permission.READ_SMS)
         // Check if all permissions are granted before proceeding
         //4 jan Not working
         //permission dialog is not opening
@@ -111,7 +114,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 //3.Choose
                 R.id.choose-> {
-                    Toast.makeText(this,"Choose any one option to add transaction manually",Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this,"Choose any one option to add transaction manually",Toast.LENGTH_SHORT).show()
                     replaceFragment(Choose())
                     true
                 }

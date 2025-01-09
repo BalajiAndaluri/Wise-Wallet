@@ -13,7 +13,6 @@
         android:orientation="vertical">
 
 
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -113,12 +112,28 @@
             </TableRow>
 
         </TableLayout>
-        <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Home Page"
-        android:textSize="36sp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dip"
+                android:layout_marginTop="16dip"
+                android:layout_marginStart="12dip"
+                android:id="@+id/search"
+                app:queryHint="Search..."
+                android:focusable="auto"
+                android:layout_alignParentEnd="true"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"
+                android:layout_below="@id/search"
+                android:id="@+id/RecycleView">
+            </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
     </LinearLayout>
 
 

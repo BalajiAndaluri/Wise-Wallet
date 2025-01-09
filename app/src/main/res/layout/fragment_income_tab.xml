@@ -3,67 +3,144 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/Relative1"
     tools:context=".fragments.IncomeTab">
 
     <!-- TODO: Update blank fragment layout -->
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/Table"
         android:orientation="vertical">
+
         <TableRow
-            android:layout_width="match_parent">
+            android:weightSum="4"
+            android:layout_width="match_parent"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:paddingStart="10dip"
+            android:paddingEnd="10dip">
+            <FrameLayout
+                android:clickable="true"
+                android:id="@+id/IIcon00"
+                android:focusable="auto"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Veggies"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/baseline_currency_rupee_24" />
+
+                <TextView
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Salary"
+                    android:background="@color/grey"
+                    android:textStyle="italic"
+                    android:textSize="10dip"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dip"/>
+
+            </FrameLayout>
+            <FrameLayout
+                android:clickable="true"
+                android:id="@+id/IIcon01"
+                android:focusable="true"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Transport"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/rent_income" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dip"
+                    android:background="@color/grey"
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:text="House1 Rent"
+                    android:textColor="@color/black"
+                    android:textSize="10dip"
+                    android:textStyle="italic" />
+
+            </FrameLayout><FrameLayout
+            android:clickable="true"
+            android:id="@+id/IIcon02"
+            android:focusable="true"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round"
-                android:padding="15dip"/>
+                android:contentDescription="Shopping"
+                android:scaleType="fitCenter"
+                android:paddingBottom="20dip"
+                android:src="@drawable/rent_income" />
 
-            <ImageButton
-                android:layout_width="match_parent"
+            <TextView
+                android:shadowRadius="@integer/material_motion_duration_long_1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round"
-                android:padding="15dip"/>
+                android:text="House2 Rent"
+                android:textStyle="italic"
+                android:textSize="10dip"
+                android:background="@color/grey"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dip"/>
 
-            <ImageButton
-                android:padding="15dip"
+        </FrameLayout>
+            <FrameLayout
+                android:layout_weight="1"
+                android:clickable="true"
+                android:id="@+id/IIcon03"
+                android:focusable="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round" />
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:padding="15dip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round" />
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Shopping"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/baseline_add_black" />
+
+                <TextView
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Settings"
+                    android:id="@+id/direct_to_setting"
+                    android:background="@color/grey"
+                    android:textStyle="italic"
+                    android:textSize="10dip"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dip"/>
+
+            </FrameLayout>
+
+
+
         </TableRow>
-        <TableRow
-            android:layout_width="match_parent">
 
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round"
-                android:padding="15dip"/>
-
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round"
-                android:padding="15dip"/>
-
-            <ImageButton
-                android:padding="15dip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round" />
-
-            <ImageButton
-                android:padding="15dip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round" />
-        </TableRow>
 
     </TableLayout>
 

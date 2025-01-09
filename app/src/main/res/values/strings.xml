@@ -22,4 +22,19 @@
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Welcome!</string>
+
+    <string name="c1">Your Money. Your Way.</string>
+    <string name="m1">Welcome to WiseWallet, your personal finance assistant.
+        We are here to help you take control of your finances</string>
+
+    <string name="c3">Effortless Expense Tracking</string>
+    <string name="m3">Easily record all your expenses with our intuitive interface. Simply enter the amount and category,and we will do the rest.</string>
+
+    <string name="c4">Visualize Your Finances</string>
+    <string name="m4">Understand your spending habits with clear and insightful charts and reports.
+        Identify areas where you can save</string>
+
+    <string name="c2">Track by Date!</string>
+    <string name="m2">Filter your transactions by date to analyze your spending patterns and identify trends.</string>
+
 </resources>

@@ -10,60 +10,260 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TableRow
-            android:layout_width="match_parent">
-
-            <ImageButton
+            android:weightSum="4"
+            android:layout_width="match_parent"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:paddingStart="10dip"
+            android:paddingEnd="10dip">
+            <FrameLayout
+                android:clickable="true"
+                android:id="@+id/EIcon00"
+                android:focusable="true"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round"
-                android:padding="15dip"/>
+                android:layout_height="wrap_content">
 
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round"
-                android:padding="15dip"/>
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Veggies"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/veggies" />
 
-            <ImageButton
-                android:padding="15dip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round" />
+                <TextView
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Veggies"
+                    android:background="@color/grey"
+                    android:textStyle="italic"
+                    android:textSize="10dip"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dip"/>
 
-            <ImageButton
-                android:padding="15dip"
+            </FrameLayout>
+            <FrameLayout
+                android:clickable="true"
+                android:id="@+id/EIcon01"
+                android:focusable="true"
+                android:layout_weight="1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round" />
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Transport"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/taxi" />
+
+                <TextView
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_width="wrap_content"
+                    android:background="@color/grey"
+                    android:layout_height="wrap_content"
+                    android:text="Transport"
+                    android:textStyle="italic"
+                    android:textSize="10dip"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dip"/>
+
+            </FrameLayout><FrameLayout
+            android:clickable="true"
+            android:id="@+id/EIcon02"
+            android:focusable="true"
+            android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Shopping"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/cart" />
+
+                <TextView
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shopping"
+                    android:textStyle="italic"
+                    android:textSize="10dip"
+                    android:background="@color/grey"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dip"/>
+
+            </FrameLayout>
+            <FrameLayout
+                android:clickable="true"
+                android:id="@+id/EIcon03"
+                android:focusable="true"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Shopping"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/charity" />
+
+                <TextView
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Charity"
+                    android:background="@color/grey"
+                    android:textStyle="italic"
+                    android:textSize="10dip"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dip"/>
+
+            </FrameLayout>
+
+
+
+        </TableRow><TableRow
+            android:weightSum="4"
+            android:layout_width="match_parent"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:paddingStart="10dip"
+            android:paddingEnd="10dip">
+            <FrameLayout
+                android:clickable="true"
+                android:id="@+id/EIcon10"
+                android:focusable="true"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Veggies"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/veggies" />
+
+                <TextView
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Veggies"
+                    android:background="@color/grey"
+                    android:textStyle="italic"
+                    android:textSize="10dip"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dip"/>
+
+            </FrameLayout>
+            <FrameLayout
+                android:clickable="true"
+                android:id="@+id/EIcon11"
+                android:focusable="true"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Transport"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/taxi" />
+
+                <TextView
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_width="wrap_content"
+                    android:background="@color/grey"
+                    android:layout_height="wrap_content"
+                    android:text="Transport"
+                    android:textStyle="italic"
+                    android:textSize="10dip"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dip"/>
+
+            </FrameLayout><FrameLayout
+        android:clickable="true"
+        android:id="@+id/EIcon12"
+        android:focusable="true"
+            android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Shopping"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/cart" />
+
+                <TextView
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shopping"
+                    android:textStyle="italic"
+                    android:textSize="10dip"
+                    android:background="@color/grey"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dip"/>
+
+            </FrameLayout>
+            <FrameLayout
+                android:clickable="true"
+                android:id="@+id/EIcon13"
+                android:focusable="true"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Shopping"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/baseline_add_black" />
+
+                <TextView
+                    android:shadowRadius="@integer/material_motion_duration_long_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Settings"
+                    android:id="@+id/direct_to_setting"
+                    android:background="@color/grey"
+                    android:textStyle="italic"
+                    android:textSize="10dip"
+                    android:layout_gravity="center"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="15dip"/>
+
+            </FrameLayout>
+
+
+
         </TableRow>
-        <TableRow
-            android:layout_width="match_parent">
 
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round"
-                android:padding="15dip"/>
-
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round"
-                android:padding="15dip"/>
-
-            <ImageButton
-                android:padding="15dip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round" />
-
-            <ImageButton
-                android:padding="15dip"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/trade_mark_round" />
-        </TableRow>
 
     </TableLayout>
 

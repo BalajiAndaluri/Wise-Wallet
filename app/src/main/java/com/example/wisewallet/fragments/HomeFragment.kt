@@ -12,33 +12,32 @@ import com.example.wisewallet.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import android.widget.Toast
-import android.widget.Toolbar
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.wisewallet.fragments.Charts
-import com.example.wisewallet.fragments.Choose
-import com.example.wisewallet.fragments.HomeFragment
-import com.example.wisewallet.fragments.Me
-import com.example.wisewallet.fragments.More
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.wisewallet.RecyclerAdapter
 
-
+data class DataClass(
+    val entryImage: Int,
+    val entryDesc: String,
+    val entryValue:String
+)
 class HomeFragment : Fragment() {
     private lateinit var textDate:TextView
     private lateinit var buttonDate:Button
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var dataList: MutableList<DataClass>
+    private lateinit var adapter: RecyclerAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val calendarBox=Calendar.getInstance()
+        dataList= mutableListOf()
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         textDate = view.findViewById(R.id.textDate)
         buttonDate = view.findViewById(R.id.buttonDate)
-        val dateBox=DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+        val dateBox=DatePickerDialog.OnDateSetListener { _/*datePicker*/, year, month, day ->
             calendarBox.set(Calendar.YEAR,year)
             calendarBox.set(Calendar.MONTH,month)
             calendarBox.set(Calendar.DAY_OF_MONTH,day)
@@ -48,6 +47,33 @@ class HomeFragment : Fragment() {
             DatePickerDialog(requireContext(),dateBox,calendarBox.get(Calendar.YEAR),calendarBox.get(Calendar.MONTH),calendarBox.get(Calendar.DAY_OF_MONTH)).show()
 
         }
+        recyclerView=view.findViewById(R.id.RecycleView)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
+        dataList.add(
+            DataClass(
+                R.drawable.baseline_currency_rupee_24,
+                "Salary",
+                "75000"
+            )
+        )
+        dataList.add(
+            DataClass(
+                R.drawable.baseline_currency_rupee_24,
+                "Interest",
+                "5000"
+            )
+        )
+        dataList.add(
+            DataClass(
+                R.drawable.baseline_currency_rupee_24,
+                "Bonus",
+                "25000"
+            )
+        )
+        adapter = RecyclerAdapter(requireContext(), dataList)
+        recyclerView.adapter = adapter
+
+
         // Inflate the layout for this fragment
         return view
     }
