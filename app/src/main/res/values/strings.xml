@@ -6,9 +6,9 @@
     <string name="x">Save Now, Spend later..</string>
     <string name="y">Sign-Up</string>
     <string name="z">New User? Create one..</string>
-    <string name="a">Sign-In</string>
+    <string name="a">Verify-OTP</string>
     <string name="b">User Name</string>
-    <string name="c">Password</string>
+    <string name="c">Enter-OTP</string>
     <string name="d">WiseWallet!</string>
     <string name="e">Sign In</string>
     <string name="title_activity_login">LoginActivity</string>

@@ -5,7 +5,9 @@ import android.content.Intent
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -38,23 +40,44 @@ class MainActivity : AppCompatActivity() {
         Manifest.permission.READ_SMS,
         Manifest.permission.RECEIVE_SMS,
         Manifest.permission.SEND_SMS)
-    private val requestPermissionLauncher =
+    private val requestMultiplePermissionsLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
-            if (isGranted) {
-            }
-            else {
-                // Permission denied, handle appropriately (e.g., show an explanation)
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            permissions.entries.forEach {
+                val permissionName = it.key
+                val isGranted = it.value
+                if (isGranted) {
+                    // Permission is granted. Continue the action that required the permission
+                    Log.d("Permission", "$permissionName granted")
+
+                } else {
+                    Log.d("Permission", "$permissionName denied")
+                    hasAllPermissions = false
+                }
             }
         }
+    private fun requestPermissions() {
+        requestMultiplePermissionsLauncher.launch(permissionNameList)
+    }
     private lateinit var bottomNavigationView: BottomNavigationView
+    private var isFirstLaunch: Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         setContentView(R.layout.activity_main)//initial layout
-        requestPermissionLauncher.launch(Manifest.permission.READ_SMS)
+        val sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        isFirstLaunch = sharedPrefs.getBoolean("isFirstLaunch", true)
+        if (isFirstLaunch) {
+            // It's the first launch, request permissions
+            requestPermissions()
+
+            // Update the first launch flag in SharedPreferences
+            val editor = sharedPrefs.edit()
+            editor.putBoolean("isFirstLaunch", false)
+            editor.apply()  // or editor.commit()
+        }
         // Check if all permissions are granted before proceeding
         //4 jan Not working
         //permission dialog is not opening

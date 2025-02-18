@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@drawable/signin2"
-    tools:context=".ui.login.LoginActivity">
+    android:background="@color/matt_green"
+    tools:context=".LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -40,72 +40,68 @@
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
-                android:layout_width="300dip"
-                android:layout_height="200dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="40dip"
                 android:layout_marginBottom="10dip"
                 app:cardCornerRadius="16dip"
                 app:cardElevation="6dip">
-
-                <com.google.android.material.textfield.TextInputLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneNumberEditText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="20"
+                        android:hint="(e.g., +11234567890)"
+                        android:inputType="phone"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="10dip"
+                        android:layout_marginTop="40dip"
+                        android:layout_marginEnd="10dip"
+                        android:layout_marginBottom="40dip" />
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    <Button
+                        android:id="@+id/sendCodeButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Send Verification Code"
+                        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword"
+                        app:layout_constraintTop_toBottomOf="@+id/phoneNumberEditText"
+                        tools:layout_editor_absoluteX="46dp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="10dip"
-                    android:layout_marginTop="40dip"
-                    android:layout_marginEnd="10dip"
-                    android:layout_marginBottom="40dip"
-                    android:hint="@string/b" />
+                    <EditText
+                        android:id="@+id/editTextTextPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:autofillHints="name"
+                        android:ems="20"
+                        android:hint="@string/c"
+                        app:layout_constraintVertical_bias="0.495"
+                        android:inputType="number"
+                        app:layout_constraintTop_toBottomOf="@+id/sendCodeButton"
+                        tools:layout_editor_absoluteX="0dp" />
 
-                <EditText
-                    android:id="@+id/editTextTextPassword"
-                    android:layout_width="wrap_content"
-                    android:autofillHints="name"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="100dp"
-                    android:layout_marginRight="10dp"
-                    android:ems="20"
-                    android:hint="@string/c"
-                    android:inputType="textPassword" />
+                    <Button
+                        android:id="@+id/button"
+                        android:layout_width="171dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/a"
+                        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+                        tools:layout_editor_absoluteX="75dp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <Button
-                    android:id="@+id/button"
-                    android:layout_width="171dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="70dp"
-                    android:layout_marginTop="150dp"
-                    android:layout_marginRight="70dp"
-                    android:backgroundTint="#283FBA"
-                    android:text="@string/a" />
+
+
+
+
+
+
             </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:text="@string/z"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:typeface="sans" />
-
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="171dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="70dp"
-                android:layout_marginRight="70dp"
-                android:backgroundTint="#283FBA"
-                android:text="@string/y" />
 
             <ImageView
                 android:layout_width="104dp"

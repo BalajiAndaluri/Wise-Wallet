@@ -1,16 +1,48 @@
 package com.example.wisewallet
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class SplashActivity : AppCompatActivity(){
+    private var hasAllPermissions=true
+    private val permissionNameList= arrayOf(
+        Manifest.permission.READ_SMS,
+        Manifest.permission.RECEIVE_SMS,
+        Manifest.permission.SEND_SMS)
+    private val requestMultiplePermissionsLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            permissions.entries.forEach {
+                val permissionName = it.key
+                val isGranted = it.value
+                if (isGranted) {
+                    // Permission is granted. Continue the action that required the permission
+                    Log.d("Permission", "$permissionName granted")
+
+                } else {
+                    Log.d("Permission", "$permissionName denied")
+                    hasAllPermissions = false
+                }
+            }
+        }
+    private fun requestPermissions() {
+        requestMultiplePermissionsLauncher.launch(permissionNameList)
+    }
     lateinit var handler: Handler
+    private var isFirstLaunch: Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,6 +52,12 @@ class SplashActivity : AppCompatActivity(){
             val intent=Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
-        },3000)
+        },5000)
+        val myButton = findViewById<Button>(R.id.PermissionB)
+        myButton.setOnClickListener{
+                requestPermissions()
+        }
     }
+
+
 }
