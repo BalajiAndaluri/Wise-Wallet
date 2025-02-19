@@ -4,10 +4,17 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
+<<<<<<< HEAD
         <DropdownSelection timestamp="2024-12-26T06:01:18.209543Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\Admin\.android\avd\Pixel_8_Pro_API_35.avd" />
+=======
+        <DropdownSelection timestamp="2025-02-19T08:34:17.204613500Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=RZ8R904FDFK" />
+>>>>>>> ee55bb1 (Reconfigured)
             </handle>
           </Target>
         </DropdownSelection>

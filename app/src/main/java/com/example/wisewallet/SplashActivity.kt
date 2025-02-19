@@ -41,8 +41,8 @@ class SplashActivity : AppCompatActivity(){
     private fun requestPermissions() {
         requestMultiplePermissionsLauncher.launch(permissionNameList)
     }
-    lateinit var handler: Handler
-    private var isFirstLaunch: Boolean = true
+
+    private lateinit var handler: Handler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

@@ -41,9 +41,7 @@ android {
 }
 
 dependencies {
-    implementation("com.google.android.gms:play-services-auth:20.6.0") // For phone number hint
-    implementation("com.google.firebase:firebase-auth-ktx:22.1.2") // Firebase Authentication
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation(libs.androidx.core.ktx.v190)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -56,4 +54,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
 }
