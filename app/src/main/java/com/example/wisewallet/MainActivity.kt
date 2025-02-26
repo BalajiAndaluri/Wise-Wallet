@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import android.app.DatePickerDialog
 import android.content.Context
 import android.os.Bundle
+import android.provider.Telephony
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -25,6 +26,7 @@ import com.example.wisewallet.fragments.More
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
@@ -40,6 +42,16 @@ class MainActivity : AppCompatActivity() {
         Manifest.permission.READ_SMS,
         Manifest.permission.RECEIVE_SMS,
         Manifest.permission.SEND_SMS)
+    private val requestPermissionLauncher=registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ){isGranted ->
+        if(isGranted){
+            Toast.makeText(this,"Granted!",Toast.LENGTH_LONG).show()
+        }else{
+            Toast.makeText(this,"Denied!",Toast.LENGTH_LONG).show()
+        }
+
+    }
     private val requestMultiplePermissionsLauncher =
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -60,13 +72,17 @@ class MainActivity : AppCompatActivity() {
     private fun requestPermissions() {
         requestMultiplePermissionsLauncher.launch(permissionNameList)
     }
+
+
     private lateinit var bottomNavigationView: BottomNavigationView
     private var isFirstLaunch: Boolean = true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         setContentView(R.layout.activity_main)//initial layout
+        requestPermissionLauncher.launch(android.Manifest.permission.READ_SMS)
+        Toast.makeText(applicationContext, "read_sms permission", Toast.LENGTH_SHORT).show()
+
         val sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         isFirstLaunch = sharedPrefs.getBoolean("isFirstLaunch", true)
         if (isFirstLaunch) {
@@ -78,6 +94,7 @@ class MainActivity : AppCompatActivity() {
             editor.putBoolean("isFirstLaunch", false)
             editor.apply()  // or editor.commit()
         }
+        checkAndRequestSmsPermission()
         // Check if all permissions are granted before proceeding
         //4 jan Not working
         //permission dialog is not opening
@@ -163,6 +180,51 @@ class MainActivity : AppCompatActivity() {
             insets
         }
     }
+    private fun checkAndRequestSmsPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_SMS), permissionId_read)
+        } else {
+            retrieveTransactionSMS()
+        }
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == permissionId_read) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                retrieveTransactionSMS()
+            } else {
+                Log.e("MainActivity", "SMS permission denied")
+            }
+        }
+    }
+
+    private fun retrieveTransactionSMS() {
+        val smsMessages = getTransactionSMS(this)
+        for (message in smsMessages) {
+            Log.d("MainActivity", "SMS: $message")
+            // Display the message in your UI or process it as needed
+        }
+    }
+
+    fun getTransactionSMS(context: android.content.Context): List<String> {
+        val transactionMessages = mutableListOf<String>()
+        val uri = android.net.Uri.parse("content://sms/inbox")
+        val projection = arrayOf("_id", "address", "body", "date")
+        val selection = "LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ?"
+        val selectionArgs = arrayOf("%credited%", "%debited%","a/c *____%","a/c X____%","a/c X%X____%")
+        val sortOrder = "date DESC"
+
+        val cursor: android.database.Cursor? = context.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
+        cursor?.use {
+            val bodyIndex = it.getColumnIndex("body")
+            while (it.moveToNext()) {
+                val messageBody = it.getString(bodyIndex)
+                transactionMessages.add(messageBody)
+            }
+        }
+        return transactionMessages
+    }
+
     //26dec specified to home fragment only
    /* private fun updateText(calendar: Calendar){
         val dateFormat="yyyy"

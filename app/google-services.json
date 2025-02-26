@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "124875158550",
-    "project_id": "wise-wallet-5d432",
-    "storage_bucket": "wise-wallet-5d432.firebasestorage.app"
+    "project_number": "168234754565",
+    "project_id": "wise-wallet-firebase",
+    "storage_bucket": "wise-wallet-firebase.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:124875158550:android:7e98c6c450e9f38fc9b137",
+        "mobilesdk_app_id": "1:168234754565:android:3710e487beaf4ccc17b26c",
         "android_client_info": {
           "package_name": "com.example.wisewallet"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAkuNV17-p1SUxq0PjVsc7Mk245icDcqgk"
+          "current_key": "AIzaSyBi50xal9NDpPLLyA_on8xyB-uPsPtdUA4"
         }
       ],
       "services": {

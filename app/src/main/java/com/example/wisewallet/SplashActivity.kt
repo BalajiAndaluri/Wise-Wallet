@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -46,17 +47,15 @@ class SplashActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        installSplashScreen()
         setContentView(R.layout.activity_splash)
         handler=Handler()
         handler.postDelayed({
-            val intent=Intent(this,MainActivity::class.java)
+            val intent=Intent(this,LoginPhoneNumberActivity::class.java)
             startActivity(intent)
             finish()
         },5000)
-        val myButton = findViewById<Button>(R.id.PermissionB)
-        myButton.setOnClickListener{
-                requestPermissions()
-        }
+        requestPermissions()
     }
 
 
