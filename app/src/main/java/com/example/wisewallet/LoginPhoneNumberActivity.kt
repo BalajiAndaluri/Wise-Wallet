@@ -42,6 +42,7 @@ class LoginPhoneNumberActivity : AppCompatActivity() {
             intent.putExtra("phoneNumber", phoneNumber)
             startActivity(intent)
             finish()
+
             Toast.makeText(applicationContext, "OTP sent successfully!", Toast.LENGTH_SHORT).show()
         })
     }

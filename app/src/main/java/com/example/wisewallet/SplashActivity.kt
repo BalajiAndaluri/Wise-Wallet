@@ -54,7 +54,7 @@ class SplashActivity : AppCompatActivity(){
             val intent=Intent(this,LoginPhoneNumberActivity::class.java)
             startActivity(intent)
             finish()
-        },5000)
+        },3000)
         requestPermissions()
     }
 

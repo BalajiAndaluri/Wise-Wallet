@@ -12,47 +12,42 @@
         android:orientation="vertical">
 
         <TableRow
-            android:weightSum="4"
+            android:weightSum="3"
             android:layout_width="match_parent"
             android:paddingTop="10dip"
             android:paddingBottom="10dip"
-            android:paddingStart="10dip"
-            android:paddingEnd="10dip">
+            android:paddingStart="14dip"
+            android:paddingEnd="14dip">
                 <ImageButton
                     android:id="@+id/EIcon00"
+                    android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="Veggies"
                     android:scaleType="fitCenter"
                     android:paddingBottom="20dip"
-                    android:src="@drawable/veggies" />
+                    android:src="@drawable/bills" />
 
                 <ImageButton
                     android:id="@+id/EIcon01"
+                    android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="Transport"
                     android:scaleType="fitCenter"
                     android:paddingBottom="20dip"
-                    android:src="@drawable/taxi" />
+                    android:src="@drawable/veggies" />
 
                 <ImageButton
                     android:id="@+id/EIcon02"
+                    android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="Shopping"
                     android:scaleType="fitCenter"
                     android:paddingBottom="20dip"
-                    android:src="@drawable/cart" />
+                    android:src="@drawable/food" />
 
-                <ImageButton
-                    android:id="@+id/EIcon03"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Shopping"
-                    android:scaleType="fitCenter"
-                    android:paddingBottom="20dip"
-                    android:src="@drawable/charity" />
 
 
 
@@ -61,43 +56,81 @@
             android:layout_width="match_parent"
             android:paddingTop="10dip"
             android:paddingBottom="10dip"
-            android:paddingStart="10dip"
+            android:paddingStart="14dip"
             android:paddingEnd="10dip">
                 <ImageButton
                     android:id="@+id/EIcon10"
+                    android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="Veggies"
                     android:scaleType="fitCenter"
                     android:paddingBottom="20dip"
-                    android:src="@drawable/veggies" />
+                    android:src="@drawable/taxi" />
 
                 <ImageButton
                     android:id="@+id/EIcon11"
+                    android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="Transport"
                     android:scaleType="fitCenter"
                     android:paddingBottom="20dip"
-                    android:src="@drawable/taxi" />
+                    android:src="@drawable/fuel" />
 
                 <ImageButton
                     android:id="@+id/EIcon12"
+                    android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="Shopping"
                     android:scaleType="fitCenter"
                     android:paddingBottom="20dip"
-                    android:src="@drawable/cart" />
+                    android:src="@drawable/groceries" />
+
+
+
+
+
+        </TableRow>
+        <TableRow
+            android:weightSum="4"
+            android:layout_width="match_parent"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"
+            android:paddingStart="14dip"
+            android:paddingEnd="10dip">
+                <ImageButton
+                    android:id="@+id/EIcon20"
+                    android:backgroundTint="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Veggies"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/entertainment" />
 
                 <ImageButton
-                    android:id="@+id/EIcon13"
+                    android:id="@+id/EIcon21"
+                    android:backgroundTint="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="Transport"
+                    android:scaleType="fitCenter"
+                    android:paddingBottom="20dip"
+                    android:src="@drawable/shopping" />
+
+                <ImageButton
+                    android:id="@+id/EIcon22"
+                    android:backgroundTint="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="Shopping"
                     android:scaleType="fitCenter"
                     android:paddingBottom="20dip"
-                    android:src="@drawable/charity" />
+                    android:src="@drawable/others" />
+
+
 
 
 

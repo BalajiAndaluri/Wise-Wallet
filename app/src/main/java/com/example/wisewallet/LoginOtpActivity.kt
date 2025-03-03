@@ -11,10 +11,13 @@ import com.example.wisewallet.R.*
 import java.util.Random
 
 import android.Manifest
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.telephony.SmsManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -62,10 +65,14 @@ class LoginOtpActivity : AppCompatActivity() {
 
     private fun checkOrCreatePhoneNumber(phoneNumber: String) {
         Toast.makeText(applicationContext, "Checking/Creating phone number...", Toast.LENGTH_SHORT).show()
-
+        val sharedPreferences: SharedPreferences =
+            this.getSharedPreferences("UserData", Context.MODE_PRIVATE)
+        val newPh = sharedPreferences.getString("newPh", null).toString()
+         // or editor.commit()
         val database = FirebaseDatabase.getInstance()
         val usersRef = database.getReference("users")
-        val userRef = usersRef.child(phoneNumber)
+        val userRef = usersRef.child(newPh)
+        //Toast.makeText(this,"x: $normalizedPhoneNumber, $userRef",Toast.LENGTH_SHORT).show()
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -98,6 +105,7 @@ class LoginOtpActivity : AppCompatActivity() {
             }
         })
     }
+
 
     private fun goToUsernameCollectionPage(phoneNumber: String) {
         val intent = Intent(this, LoginUsernameActivity::class.java)

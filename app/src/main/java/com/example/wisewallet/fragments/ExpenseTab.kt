@@ -28,8 +28,9 @@ class ExpenseTab : Fragment() {
 
     private fun setupClickListeners(view: View) {
         val imageButtonIds = arrayOf(
-            R.id.EIcon00, R.id.EIcon01, R.id.EIcon02, R.id.EIcon03,
-            R.id.EIcon10, R.id.EIcon11, R.id.EIcon12, R.id.EIcon13
+            R.id.EIcon00, R.id.EIcon01, R.id.EIcon02,
+            R.id.EIcon10, R.id.EIcon11, R.id.EIcon12,
+            R.id.EIcon20, R.id.EIcon21, R.id.EIcon22
         )
 
         for (imageButtonId in imageButtonIds) {
@@ -55,14 +56,16 @@ class ExpenseTab : Fragment() {
 
     private fun getToastMessage(imageButtonId: Int): String {
         return when (imageButtonId) {
-            R.id.EIcon00 -> "Veggies clicked!"
-            R.id.EIcon01 -> "Transport clicked!"
-            R.id.EIcon02 -> "Shopping clicked!"
-            R.id.EIcon03 -> "Charity clicked!"
-            R.id.EIcon10 -> "Veggies clicked!"
-            R.id.EIcon11 -> "Transport clicked!"
-            R.id.EIcon12 -> "Shopping clicked!"
-            R.id.EIcon13 -> "Settings clicked!"
+            R.id.EIcon00 -> "Bills clicked!"
+            R.id.EIcon01 -> "Veggies clicked!"
+            R.id.EIcon02 -> "Food clicked!"
+            R.id.EIcon10 -> "Transportation clicked!"
+            R.id.EIcon11 -> "Fuel clicked!"
+            R.id.EIcon12 -> "Groceries clicked!"
+            R.id.EIcon20 -> "Entertainment clicked!"
+            R.id.EIcon21 -> "Shopping clicked!"
+            R.id.EIcon22 -> "Others clicked!"
+
             else -> "Clicked!"
         }
     }

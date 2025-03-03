@@ -10,133 +10,88 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/Table"
         android:orientation="vertical">
 
         <TableRow
-            android:weightSum="4"
             android:layout_width="match_parent"
-            android:paddingTop="10dip"
-            android:paddingBottom="10dip"
+            android:layout_height="match_parent"
             android:paddingStart="10dip"
-            android:paddingEnd="10dip">
-            <FrameLayout
-                android:clickable="true"
-                android:id="@+id/IIcon00"
-                android:focusable="auto"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Veggies"
-                    android:scaleType="fitCenter"
-                    android:paddingBottom="20dip"
-                    android:src="@drawable/baseline_currency_rupee_24" />
-
-                <TextView
-                    android:shadowRadius="@integer/material_motion_duration_long_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Salary"
-                    android:background="@color/grey"
-                    android:textStyle="italic"
-                    android:textSize="10dip"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="15dip"/>
-
-            </FrameLayout>
-            <FrameLayout
-                android:clickable="true"
-                android:id="@+id/IIcon01"
-                android:focusable="true"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Transport"
-                    android:scaleType="fitCenter"
-                    android:paddingBottom="20dip"
-                    android:src="@drawable/rent_income" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dip"
-                    android:background="@color/grey"
-                    android:shadowRadius="@integer/material_motion_duration_long_1"
-                    android:text="House1 Rent"
-                    android:textColor="@color/black"
-                    android:textSize="10dip"
-                    android:textStyle="italic" />
-
-            </FrameLayout><FrameLayout
-            android:clickable="true"
-            android:id="@+id/IIcon02"
-            android:focusable="true"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:paddingTop="10dip"
+            android:paddingEnd="10dip"
+            android:paddingBottom="10dip"
+            android:weightSum="4">
 
             <ImageButton
+                android:id="@+id/IIcon00"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:contentDescription="Shopping"
-                android:scaleType="fitCenter"
+                android:backgroundTint="@color/white"
+                android:contentDescription="Veggies"
                 android:paddingBottom="20dip"
-                android:src="@drawable/rent_income" />
+                android:scaleType="fitCenter"
+                android:src="@drawable/salary" />
 
-            <TextView
-                android:shadowRadius="@integer/material_motion_duration_long_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="House2 Rent"
-                android:textStyle="italic"
-                android:textSize="10dip"
-                android:background="@color/grey"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:layout_marginTop="15dip"/>
-
-        </FrameLayout>
-            <FrameLayout
-                android:layout_weight="1"
-                android:clickable="true"
-                android:id="@+id/IIcon03"
-                android:focusable="true"
+            <ImageButton
+                android:id="@+id/IIcon01"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:contentDescription="Transport"
+                android:paddingBottom="20dip"
+                android:scaleType="fitCenter"
+                android:src="@drawable/bonus" />
 
-                <ImageButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="Shopping"
-                    android:scaleType="fitCenter"
-                    android:paddingBottom="20dip"
-                    android:src="@drawable/baseline_add_black" />
+            <ImageButton
+                android:id="@+id/IIcon02"
+                android:layout_width="136dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:contentDescription="Shopping"
+                android:paddingBottom="20dip"
+                android:scaleType="fitCenter"
+                android:src="@drawable/rent" />
 
-                <TextView
-                    android:shadowRadius="@integer/material_motion_duration_long_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Settings"
-                    android:id="@+id/direct_to_setting"
-                    android:background="@color/grey"
-                    android:textStyle="italic"
-                    android:textSize="10dip"
-                    android:layout_gravity="center"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="15dip"/>
 
-            </FrameLayout>
+        </TableRow>
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="10dip"
+            android:paddingTop="10dip"
+            android:paddingEnd="10dip"
+            android:paddingBottom="10dip"
+            android:weightSum="4">
+
+            <ImageButton
+                android:id="@+id/IIcon10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:contentDescription="Veggies"
+                android:paddingBottom="20dip"
+                android:scaleType="fitCenter"
+                android:src="@drawable/interest" />
+
+            <ImageButton
+                android:id="@+id/IIcon11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:contentDescription="Transport"
+                android:paddingBottom="20dip"
+                android:scaleType="fitCenter"
+                android:src="@drawable/others" />
+
+            <ImageButton
+                android:id="@+id/IIcon12"
+                android:layout_width="match_parent"
+                android:layout_height="92dp"
+                android:backgroundTint="@color/white"
+                android:contentDescription="Shopping"
+                android:paddingBottom="20dip"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_currency_rupee_24" />
 
 
         </TableRow>

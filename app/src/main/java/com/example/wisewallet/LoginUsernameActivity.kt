@@ -98,6 +98,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.wisewallet.MainActivity
 import com.google.firebase.database.FirebaseDatabase
 import android.util.Log
+import java.net.URLEncoder
 
 class LoginUsernameActivity : AppCompatActivity() {
     lateinit var usernameInput: EditText
@@ -105,7 +106,7 @@ class LoginUsernameActivity : AppCompatActivity() {
     lateinit var letMeInBtn: Button
     lateinit var progressBar: ProgressBar
     lateinit var phoneNumber: String
-
+    lateinit var newPh: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
@@ -116,6 +117,7 @@ class LoginUsernameActivity : AppCompatActivity() {
 
         phoneNumber = intent.getStringExtra("phoneNumber").toString() //Retrieve phone number from intent
         user=intent.getStringExtra("username").toString()
+        newPh=phoneNumber.replace("+91", "")
         if(user.isNotEmpty()&& user!=null){
             usernameInput.setText(user)
         }
@@ -124,6 +126,7 @@ class LoginUsernameActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
         editor.putString("phoneNumber", phoneNumber)
         editor.putString("user", user)
+        editor.putString("newPh",newPh)
         editor.apply()
     }
 
@@ -134,7 +137,7 @@ class LoginUsernameActivity : AppCompatActivity() {
             return
         }
         setInProgress(true)
-        saveUsernameToFirebase(phoneNumber, username) // Save username to Firebase
+        saveUsernameToFirebase(newPh, username) // Save username to Firebase
     }
 
     fun saveUsernameToFirebase(phoneNumber: String, username: String) {

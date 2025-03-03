@@ -61,6 +61,8 @@
         </activity>
         <activity android:name=".ManualEntryActivity"
             android:exported="true"/>
+        <activity android:name=".ManualEntryActivityIncome"
+            android:exported="true"/>
     </application>
 
 </manifest>
