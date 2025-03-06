@@ -51,10 +51,10 @@ class SplashActivity : AppCompatActivity(){
         setContentView(R.layout.activity_splash)
         handler=Handler()
         handler.postDelayed({
-            val intent=Intent(this,LoginPhoneNumberActivity::class.java)
+            val intent=Intent(this,NavigationActivity::class.java)
             startActivity(intent)
             finish()
-        },3000)
+        },2000)
         requestPermissions()
     }
 

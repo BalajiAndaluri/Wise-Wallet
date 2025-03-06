@@ -35,6 +35,9 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import kotlinx.coroutines.*
 import java.util.Locale
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
 class MainActivity : AppCompatActivity() {
     private val permissionId_read=100
     private val permissionId_receive=101
@@ -175,24 +178,24 @@ class MainActivity : AppCompatActivity() {
 
     fun getTransactionSMS(context: Context): MutableList<String> {
         val sharedPrefs: SharedPreferences = context.getSharedPreferences("SMSPrefs", Context.MODE_PRIVATE)
-        val lastProcessedDate = sharedPrefs.getLong("lastProcessedDate", 0L) // 0L means no date stored yet
+        val lastProcessedDated = sharedPrefs.getLong("lastProcessedDated", 0L) // 0L means no date stored yet
         val transactionMessages = mutableListOf<String>()
         val uri = android.net.Uri.parse("content://sms/inbox")
         val projection = arrayOf("_id", "address", "body", "date")
-        val selection = "LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ?"
-        val selectionArgs = arrayOf("%credited%", "%debited%", "a/c *____%", "a/c X____%", "a/c X%X____%")
+        val selection = " LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ?"
+        val selectionArgs = arrayOf("a/c *____%", "a/c X____%", "a/c X%X____%")
         val sortOrder = "date DESC"
 
         val cursor: android.database.Cursor? = context.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
         cursor?.use {
             val bodyIndex = it.getColumnIndex("body")
             val dateIndex = it.getColumnIndex("date")
-            var latestProcessedDate = lastProcessedDate
+            var latestProcessedDate = lastProcessedDated
             while (it.moveToNext()) {
                 val messageBody = it.getString(bodyIndex)
                 val messageDate = it.getLong(dateIndex)
                 transactionMessages.add(messageBody)
-                if (messageDate > lastProcessedDate) {
+                if (messageDate > lastProcessedDated) {
                     // Extract year and month from message date
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = messageDate
@@ -215,25 +218,48 @@ class MainActivity : AppCompatActivity() {
         }
         return transactionMessages
     }
-
     private fun addToFirebase(transactionType: String, operation: String, message: String, year: String, month: String) {
         val database = FirebaseDatabase.getInstance()
         val sharedPreferences: SharedPreferences = this.getSharedPreferences("UserData", Context.MODE_PRIVATE)
         phoneNumber = sharedPreferences.getString("phoneNumber", null).toString()
         user = sharedPreferences.getString("user", null).toString()
-        //val phoneNumber = "your_phone_number" // Replace with actual phone number
-        val transactionRef = database.getReference("users").child(phoneNumber).child(year).child(month).child(transactionType).child(operation).push()
-        val transactionData = hashMapOf(
-            "operation" to operation,
-            "message" to message
-        )
-        transactionRef.setValue(transactionData)
-            .addOnSuccessListener {
-                // Data added successfully
-            }
-            .addOnFailureListener {
-                // Handle errors
-            }
+        val newPh=sharedPreferences.getString("newPh", null).toString()
+        // Extract amount and date from the message
+        val amount = extractAmount(message)
+        val date = extractDate(message)
+
+        if (amount != null && date != null) {
+            val transactionRef = database.getReference("users").child(newPh).child(year).child(month).child(transactionType).child(operation).push()
+            val transactionData = hashMapOf(
+                "amount" to amount,
+                "date" to date
+            )
+            transactionRef.setValue(transactionData)
+                .addOnSuccessListener {
+                    // Data added successfully
+                }
+                .addOnFailureListener {
+                    // Handle errors
+                }
+        } else {
+            // Handle cases where amount or date extraction fails
+            Log.e("MainActivity", "Failed to extract amount or date from message: $message")
+        }
+    }
+    private fun extractAmount(message: String): String? {
+        val pattern: Pattern = Pattern.compile("Rs.(\\d+.\\d{2})")
+        val matcher: Matcher = pattern.matcher(message)
+        return if (matcher.find()) {
+            matcher.group(1)
+        } else null
+    }
+
+    private fun extractDate(message: String): String? {
+        val pattern: Pattern = Pattern.compile("on (\\d{2}-\\d{2}-\\d{4})")
+        val matcher: Matcher = pattern.matcher(message)
+        return if (matcher.find()) {
+            matcher.group(1)
+        } else null
     }
 
     /*fun getTransactionSMS(context: android.content.Context): List<String> {
