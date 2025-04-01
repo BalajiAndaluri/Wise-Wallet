@@ -1,19 +1,13 @@
 package com.example.wisewallet
 import android.Manifest
 import android.content.pm.PackageManager
-import android.content.Intent
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import android.app.DatePickerDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.provider.Telephony
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -26,22 +20,18 @@ import com.example.wisewallet.fragments.Me
 import com.example.wisewallet.fragments.More
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.coroutines.delay
+import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import kotlinx.coroutines.*
 import java.util.Locale
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 class MainActivity : AppCompatActivity() {
     private val permissionId_read=100
-    private val permissionId_receive=101
-    private val permissionId_send=102
     private var hasAllPermissions=true
     private val permissionNameList= arrayOf(
         Manifest.permission.READ_SMS,
@@ -87,11 +77,8 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)//initial layout
         requestPermissionLauncher.launch(android.Manifest.permission.READ_SMS)
-        Toast.makeText(applicationContext, "read_sms permission", Toast.LENGTH_SHORT).show()
         requestPermissionLauncher.launch(android.Manifest.permission.SEND_SMS)
-        Toast.makeText(applicationContext, "send_sms permission", Toast.LENGTH_SHORT).show()
         requestPermissionLauncher.launch(android.Manifest.permission.RECEIVE_SMS)
-        Toast.makeText(applicationContext, "receive_sms permission", Toast.LENGTH_SHORT).show()
 
         val sharedPrefs = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         isFirstLaunch = sharedPrefs.getBoolean("isFirstLaunch", true)
@@ -124,7 +111,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 //3.Choose
                 R.id.choose-> {
-                    //Toast.makeText(this,"Choose any one option to add transaction manually",Toast.LENGTH_SHORT).show()
                     replaceFragment(Choose())
                     true
                 }
@@ -177,44 +163,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun getTransactionSMS(context: Context): MutableList<String> {
-        val sharedPrefs: SharedPreferences = context.getSharedPreferences("SMSPrefs", Context.MODE_PRIVATE)
-        val lastProcessedDated = sharedPrefs.getLong("lastProcessedDated", 0L) // 0L means no date stored yet
+        val sharedPrefs: SharedPreferences = context.getSharedPreferences("SMSPref", Context.MODE_PRIVATE)
+        val lastProcessedDate = sharedPrefs.getLong("lastUsedDate", 0L) // 0L means no date stored yet
         val transactionMessages = mutableListOf<String>()
         val uri = android.net.Uri.parse("content://sms/inbox")
         val projection = arrayOf("_id", "address", "body", "date")
         val selection = " LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ?"
         val selectionArgs = arrayOf("a/c *____%", "a/c X____%", "a/c X%X____%")
-        val sortOrder = "date DESC"
+        val sortOrder = "date ASC"
 
         val cursor: android.database.Cursor? = context.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
         cursor?.use {
             val bodyIndex = it.getColumnIndex("body")
             val dateIndex = it.getColumnIndex("date")
-            var latestProcessedDate = lastProcessedDated
+            var latestProcessedDate = lastProcessedDate
             while (it.moveToNext()) {
                 val messageBody = it.getString(bodyIndex)
                 val messageDate = it.getLong(dateIndex)
                 transactionMessages.add(messageBody)
-                if (messageDate > lastProcessedDated) {
+                if (messageDate > latestProcessedDate) {
                     // Extract year and month from message date
                     val calendar = Calendar.getInstance()
                     calendar.timeInMillis = messageDate
                     val year = calendar.get(Calendar.YEAR).toString()
                     val month = SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.time)
                         .uppercase(Locale.getDefault())
-
+                        latestProcessedDate = maxOf(latestProcessedDate, messageDate)
                     // Check for keywords and add to Firebase accordingly
                     if (messageBody.contains("credited", true)) {
                         addToFirebase("Income", "Credited", messageBody, year, month)
                     } else if (messageBody.contains("debited", true)) {
                         addToFirebase("Expense", "Debited", messageBody, year, month)
                     }
-                    latestProcessedDate = maxOf(latestProcessedDate, messageDate)
+
                 }
             }
             val editor = sharedPrefs.edit()
-            editor.putLong("lastProcessedDate", latestProcessedDate)
+            editor.putLong("lastUsedDate", latestProcessedDate)
             editor.apply()
+
+
         }
         return transactionMessages
     }
@@ -241,13 +229,39 @@ class MainActivity : AppCompatActivity() {
                 .addOnFailureListener {
                     // Handle errors
                 }
+            val operationRef = database.getReference("users").child(newPh).child(year).child(month).child(transactionType).child(operation)
+            operationRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var totalAmount = 0.0
+                    for (transactionSnapshot in snapshot.children) {
+                        val amountStr = transactionSnapshot.child("amount").getValue(String::class.java)
+                            ?.toDoubleOrNull()
+                            ?: 0.0
+                        totalAmount += amountStr
+                    }
+                    operationRef.child("total").setValue(totalAmount)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // Subcategory total updated successfully, now update Expense total
+                                updateExpenseTotal(newPh, year, month)
+                                updateIncomeTotal(newPh, year, month)
+                            } else {
+                                Log.e("Firebase", "Error updating subcategory total: ${task.exception?.message}")
+                            }
+                        }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("Firebase", "Error calculating total: ${error.message}")
+                }
+            })
         } else {
             // Handle cases where amount or date extraction fails
             Log.e("MainActivity", "Failed to extract amount or date from message: $message")
         }
     }
     private fun extractAmount(message: String): String? {
-        val pattern: Pattern = Pattern.compile("Rs.(\\d+.\\d{2})")
+        val pattern: Pattern = Pattern.compile("Rs[.:\\s]?(\\d+\\.\\d{2})")
         val matcher: Matcher = pattern.matcher(message)
         return if (matcher.find()) {
             matcher.group(1)
@@ -261,33 +275,44 @@ class MainActivity : AppCompatActivity() {
             matcher.group(1)
         } else null
     }
+    private fun updateExpenseTotal(phoneNumber: String, year: String, month: String) {
+        val database = FirebaseDatabase.getInstance()
+        val expenseRef = database.getReference("users").child(phoneNumber).child(year).child(month).child("Expense")
 
-    /*fun getTransactionSMS(context: android.content.Context): List<String> {
-        val transactionMessages = mutableListOf<String>()
-        val uri = android.net.Uri.parse("content://sms/inbox")
-        val projection = arrayOf("_id", "address", "body", "date")
-        val selection = "LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ? or LOWER(body) LIKE ?"
-        val selectionArgs = arrayOf("%credited%", "%debited%","a/c *____%","a/c X____%","a/c X%X____%")
-        val sortOrder = "date DESC"
-
-        val cursor: android.database.Cursor? = context.contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
-        cursor?.use {
-            val bodyIndex = it.getColumnIndex("body")
-            while (it.moveToNext()) {
-                val messageBody = it.getString(bodyIndex)
-                transactionMessages.add(messageBody)
+        expenseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var grandTotal = 0.0
+                for (operationSnapshot in snapshot.children) {
+                    val subTotal = operationSnapshot.child("total").getValue(Double::class.java) ?: 0.0
+                    grandTotal += subTotal
+                }
+                expenseRef.child("total").setValue(grandTotal)
             }
-        }
-        return transactionMessages
-    }*/
 
-    //26dec specified to home fragment only
-   /* private fun updateText(calendar: Calendar){
-        val dateFormat="yyyy"
-        val simple = SimpleDateFormat(dateFormat, Locale.UK)
-        textDate.text = simple.format(calendar.time)
-    }*/
-//25dec
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error updating Expense total: ${error.message}")
+            }
+        })
+    }
+    private fun updateIncomeTotal(phoneNumber: String, year: String, month: String) {
+        val database = FirebaseDatabase.getInstance()
+        val expenseRef = database.getReference("users").child(phoneNumber).child(year).child(month).child("Income")
+
+        expenseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var grandTotal = 0.0
+                for (operationSnapshot in snapshot.children) {
+                    val subTotal = operationSnapshot.child("total").getValue(Double::class.java) ?: 0.0
+                    grandTotal += subTotal
+                }
+                expenseRef.child("total").setValue(grandTotal)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error updating Expense total: ${error.message}")
+            }
+        })
+    }
     private fun replaceFragment(fragment:Fragment){         //new fragment  current fragment
         //replaces current fragment with new fragment
         supportFragmentManager.beginTransaction().replace(R.id.frame_container, fragment).commit()

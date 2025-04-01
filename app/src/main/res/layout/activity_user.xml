@@ -117,6 +117,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_round_corner"
             android:text="Let me in" />
+        <Button
+            android:id="@+id/reset"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_round_corner"
+            android:text="Reset my data" />
 
         <ProgressBar
             android:id="@+id/login_progress_bar"

@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -28,13 +29,17 @@ import java.util.Locale
 data class DataClass(
     val amount: String,
     val date: String,
-    val category: String
-)
+    val category: String,
+    )
 
 class HomeFragment : Fragment() {
     private lateinit var phoneNumber: String
     private lateinit var textDate: TextView
     private lateinit var buttonDate: Button
+    private lateinit var expValue: TextView
+    private lateinit var incValue: TextView
+    private lateinit var balValue: TextView
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var dataList: MutableList<DataClass>
     private lateinit var adapter: RecyclerAdapter
@@ -57,6 +62,9 @@ class HomeFragment : Fragment() {
         Toast.makeText(requireContext(), "Number: $newPh", Toast.LENGTH_SHORT).show()
         textDate = view.findViewById(R.id.textDate)
         buttonDate = view.findViewById(R.id.buttonDate)
+        expValue = view.findViewById(R.id.Exp_value)
+        incValue = view.findViewById(R.id.Income_value)
+        balValue = view.findViewById(R.id.Total_Balance)
         databaseReference = FirebaseDatabase.getInstance()
         usersRef = databaseReference.getReference("users")
         userRef = usersRef.child(newPh)
@@ -86,33 +94,72 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchDataFromFirebase(year: String, month: String, userRef: DatabaseReference) {
-        Toast.makeText(requireContext(), "Number1: $phoneNumber", Toast.LENGTH_SHORT).show()
         val userEntriesReference = userRef.child(year).child(month)
-        Toast.makeText(requireContext(), "$userEntriesReference", Toast.LENGTH_LONG).show()
 
         valueEventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (isAdded && context != null) {
-                    Toast.makeText(requireContext(), "Number2: $phoneNumber", Toast.LENGTH_SHORT).show()
                     dataList.clear()
+                    var totalExpenses = 0.0
+                    var totalIncome = 0.0
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                     for (categorySnapshot in snapshot.children) {
-                        Toast.makeText(requireContext(), "cat: $categorySnapshot", Toast.LENGTH_SHORT).show()
+                        if (categorySnapshot.key=="Expense"){
+                            totalExpenses=categorySnapshot.child("total").getValue(Double::class.java) ?: 0.0
+                            val df = DecimalFormat("#.##")
+                            totalExpenses = df.format(totalExpenses).toDouble()
+                        }
+                        else{
+                            totalIncome=categorySnapshot.child("total").getValue(Double::class.java) ?: 0.0
+                            val df = DecimalFormat("#.##")
+                            totalIncome = df.format(totalIncome).toDouble()
+                        }
                         for (subCategorySnapshot in categorySnapshot.children) {
                             for (entrySnapshot in subCategorySnapshot.children) {
-                                Toast.makeText(requireContext(), "called!", Toast.LENGTH_LONG).show()
                                 if (entrySnapshot.hasChild("amount") && entrySnapshot.hasChild("date")) {
                                     val amount = entrySnapshot.child("amount").getValue(String::class.java) ?: ""
-                                    val date = entrySnapshot.child("date").getValue(String::class.java) ?: ""
+                                    val dateString = entrySnapshot.child("date").getValue(String::class.java) ?: ""
                                     val category = categorySnapshot.key ?: ""
                                     val subCategory = subCategorySnapshot.key ?: ""
-                                    Toast.makeText(requireContext(), "$amount and $date", Toast.LENGTH_LONG).show()
-                                    val data = DataClass(amount, date, "$category - $subCategory")
-                                    dataList.add(data)
+                                    try {
+                                        val date = dateFormat.parse(dateString) // Parse the date string
+
+                                        if (date != null) {
+                                            val data = DataClass(amount, dateString, "$category - $subCategory")
+
+                                            // Find the correct insertion position
+                                            val insertIndex = dataList.indexOfFirst { existingData ->
+                                                val existingDate = dateFormat.parse(existingData.date)
+                                                existingDate?.let { it.compareTo(date) < 0 } ?: false // Descending order
+                                            }
+
+                                            if (insertIndex == -1) {
+                                                dataList.add(data) // Add to the end if no larger date is found
+                                            } else {
+                                                dataList.add(insertIndex, data) // Insert at the correct position
+                                            }
+                                        } else {
+                                            Log.e("HomeFragment", "Failed to parse date: $dateString")
+                                            // Handle the case where date parsing fails
+                                        }
+                                    } catch (e: Exception) {
+                                        Log.e("HomeFragment", "Error parsing date: ${e.message}")
+                                        // Handle the exception
+                                    }
+                                    //val data = DataClass(amount, date, "$category - $subCategory")
+                                    //dataList.add(data)
                                 }
                             }
                         }
                     }
                     adapter.notifyDataSetChanged()
+                    expValue.text=totalExpenses.toString()
+                    incValue.text=totalIncome.toString()
+                    var balance=(totalIncome-totalExpenses)
+                    val df = DecimalFormat("#.##")
+                    balance = df.format(balance).toDouble()
+                    balValue.text=balance.toString()
+
                 } else {
                     Log.w("HomeFragment", "Fragment detached, not updating data.")
                 }

@@ -24,16 +24,16 @@ class LoginPhoneNumberActivity : AppCompatActivity() {
 
         countryCodePicker = findViewById(R.id.login_countrycode)
         phoneInput = findViewById(R.id.login_mobile_number)
-        var phoneNumber: String = phoneInput.text.toString()
+        var phoneNumber: String
         sendOtpBtn = findViewById(R.id.send_otp_btn)
         progressBar = findViewById(R.id.login_progress_bar)
 
-        progressBar?.setVisibility(View.GONE)
+        progressBar.setVisibility(View.GONE)
 
-        countryCodePicker?.registerCarrierNumberEditText(phoneInput)
-        sendOtpBtn?.setOnClickListener(View.OnClickListener setOnClickListener@{ v: View? ->
-            if (!countryCodePicker!!.isValidFullNumber()) {
-                phoneInput!!.setError("Phone number not valid")
+        countryCodePicker.registerCarrierNumberEditText(phoneInput)
+        sendOtpBtn.setOnClickListener(View.OnClickListener setOnClickListener@{ v: View? ->
+            if (!countryCodePicker.isValidFullNumber()) {
+                phoneInput.setError("Phone number not valid")
                 return@setOnClickListener
             }
             phoneNumber = countryCodePicker.fullNumberWithPlus

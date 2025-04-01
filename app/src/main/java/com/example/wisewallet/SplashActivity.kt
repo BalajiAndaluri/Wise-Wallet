@@ -3,18 +3,14 @@ package com.example.wisewallet
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class SplashActivity : AppCompatActivity(){
     private var hasAllPermissions=true
@@ -49,13 +45,31 @@ class SplashActivity : AppCompatActivity(){
         enableEdgeToEdge()
         installSplashScreen()
         setContentView(R.layout.activity_splash)
+        //val sharedPrefs: SharedPreferences = getSharedPreferences("SMSPref", Context.MODE_PRIVATE)
+        //val editor: SharedPreferences.Editor = sharedPrefs.edit()
+        //editor.clear()
+        //editor.apply() // Or editor.commit()
         handler=Handler()
+        //clearAllExceptOne(this,"SMSPref","lastProcessedDate1")
         handler.postDelayed({
             val intent=Intent(this,NavigationActivity::class.java)
             startActivity(intent)
             finish()
-        },2000)
+        },6000)
         requestPermissions()
+    }
+
+    fun clearAllExceptOne(context: Context, sharedPrefsName: String, excludedKey: String) {
+        val sharedPrefs: SharedPreferences = context.getSharedPreferences(sharedPrefsName, Context.MODE_PRIVATE)
+        val editor = sharedPrefs.edit()
+        val allKeys = sharedPrefs.all.keys.toList() // Get all keys
+
+        for (key in allKeys) {
+            if (key != excludedKey) {
+                editor.remove(key) // Remove all except the excluded one
+            }
+        }
+        editor.apply()
     }
 
 

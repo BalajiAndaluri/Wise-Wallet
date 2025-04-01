@@ -16,8 +16,8 @@
         android:iconTint="@color/black"/>
     <item
         android:id="@+id/more"
-        android:title="More"
-        android:icon="@drawable/baseline_pending_24"
+        android:title="Guide"
+        android:icon="@drawable/baseline_support_24"
         android:visible="true"/>
     <item
         android:id="@+id/Me"

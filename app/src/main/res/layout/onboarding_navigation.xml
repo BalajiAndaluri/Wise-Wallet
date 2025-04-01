@@ -37,12 +37,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/matt_green"
+        android:cursorVisible="true"
         android:text="Back"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:layout_marginStart="15dp"
         android:layout_marginBottom="20dp"
         android:visibility="visible"
-        android:textColor="@color/matt_green"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

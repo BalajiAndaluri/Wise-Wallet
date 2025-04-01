@@ -104,6 +104,7 @@ class LoginUsernameActivity : AppCompatActivity() {
     lateinit var usernameInput: EditText
     var user: String=""
     lateinit var letMeInBtn: Button
+    lateinit var Reset: Button
     lateinit var progressBar: ProgressBar
     lateinit var phoneNumber: String
     lateinit var newPh: String
@@ -114,7 +115,11 @@ class LoginUsernameActivity : AppCompatActivity() {
         usernameInput = findViewById(R.id.login_username)
         letMeInBtn = findViewById(R.id.login_let_me_in_btn)
         progressBar = findViewById(R.id.login_progress_bar)
-
+        Reset=findViewById(R.id.reset)
+        Reset.setOnClickListener{
+            clearLastProcessedDateForAllUsers(this)
+            Toast.makeText(this, " Last processed date reset. All messages will be re-parsed.", Toast.LENGTH_LONG).show()
+        }
         phoneNumber = intent.getStringExtra("phoneNumber").toString() //Retrieve phone number from intent
         user=intent.getStringExtra("username").toString()
         newPh=phoneNumber.replace("+91", "")
@@ -127,6 +132,13 @@ class LoginUsernameActivity : AppCompatActivity() {
         editor.putString("phoneNumber", phoneNumber)
         editor.putString("user", user)
         editor.putString("newPh",newPh)
+        editor.apply()
+
+    }
+    private fun clearLastProcessedDateForAllUsers(context: Context) {
+        val sharedPrefs = context.getSharedPreferences("SMSPref", Context.MODE_PRIVATE)
+        val editor = sharedPrefs.edit()
+        editor.remove("lastUsedDate")
         editor.apply()
     }
 

@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dip"
     tools:context=".fragments.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -26,7 +27,7 @@
 
                 <TextView
                     android:id="@+id/textDate"
-                    android:layout_width="match_parent"
+                    android:layout_width="72dp"
                     android:layout_height="wrap_content"
                     android:paddingTop="8dip"
                     android:paddingBottom="8dip"
@@ -126,13 +127,15 @@
                 app:queryHint="Search..."
                 android:focusable="auto"
                 android:layout_alignParentEnd="true"/>
+
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RecycleView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scrollbars="vertical"
                 android:layout_below="@id/search"
-                android:id="@+id/RecycleView">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:scrollbars="vertical"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="?attr/actionBarSize"></androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
     </LinearLayout>
 

@@ -56,7 +56,6 @@ class ManualEntryActivityIncome : AppCompatActivity() {
         saveButton.setOnClickListener {
             val database = FirebaseDatabase.getInstance()
             val usersRef = database.getReference("users")
-            val ManualRef=database.getReference("Manual")
             val userRef = usersRef.child(newPh)
 
             userRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -95,11 +94,11 @@ class ManualEntryActivityIncome : AppCompatActivity() {
                             monthRef.setValue(true) // Create the Month node
                         }
 
-                        val expenseRef = monthRef.child("Income")
-                        expenseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                        val incomeRef = monthRef.child("Income")
+                        incomeRef.addListenerForSingleValueEvent(object : ValueEventListener {
                             override fun onDataChange(expenseSnapshot: DataSnapshot) {
                                 if (!expenseSnapshot.exists()) {
-                                    expenseRef.setValue(true) // Create Expense node
+                                    incomeRef.setValue(true) // Create Expense node
                                 }
                                 addIncome(newPh, titleTextView.text.toString(), amountEditText.text.toString(), year, month)
                             }
@@ -127,7 +126,7 @@ class ManualEntryActivityIncome : AppCompatActivity() {
     }
     fun convertTimestampToDateTime(timestampMillis: Long): String {
         val date = Date(timestampMillis)
-        val dateFormat = SimpleDateFormat("HH:mm:ss dd:MM:yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
         return dateFormat.format(date)
     }
     fun addIncome(phoneNumber: String, category: String,amount: String,year:String,month:String) {
@@ -138,12 +137,39 @@ class ManualEntryActivityIncome : AppCompatActivity() {
                 if (!snapshot.exists()) {
                     incomeRef.setValue(true) // Create the Expenses node
                 }
-                val expenseMap = HashMap<String, Any>()
-                expenseMap["amount"] =amount
-                expenseMap["date"] = convertTimestampToDateTime(System.currentTimeMillis())
-                incomeRef.push().setValue(expenseMap)
+                val incomeMap = HashMap<String, Any>()
+                incomeMap["amount"] =amount
+                incomeMap["date"] = convertTimestampToDateTime(System.currentTimeMillis())
+                incomeRef.push().setValue(incomeMap)
                 //expensesRef.child("Amount").push().setValue(amount)
                 //addExpense(phoneNumber, titleTextView.text.toString(),amountEditText.text.toString())
+                incomeRef.child("total").addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val amountDouble = amount.toDoubleOrNull() ?: 0.0 //Handle amount being non double
+                        if (snapshot.exists()) {
+                            // "total" exists, update it
+                            val existingTotal = snapshot.getValue(Double::class.java) ?: 0.0 // Handle null case
+
+                            val newTotal = existingTotal + amountDouble
+                            incomeRef.child("total").setValue(newTotal)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        updateIncomeTotal(phoneNumber, year, month)
+                                    } else {
+                                        Log.e("Firebase", "Error updating subcategory total: ${task.exception?.message}")
+                                    }
+                                }
+
+                        } else {
+                            // "total" doesn't exist, create it
+                            incomeRef.child("total").setValue(amountDouble)
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        // Handle error
+                        Log.e("Firebase", "Error checking total: ${error.message}")
+                    }
+                })
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -172,5 +198,24 @@ class ManualEntryActivityIncome : AppCompatActivity() {
                 Log.e("Firebase", "Error adding expense: ${e.message}")
                 Toast.makeText(this, "Error adding expense: ${e.message}", Toast.LENGTH_SHORT).show()
             }*/
+    }
+    private fun updateIncomeTotal(phoneNumber: String, year: String, month: String) {
+        val database = FirebaseDatabase.getInstance()
+        val expenseRef = database.getReference("users").child(phoneNumber).child(year).child(month).child("Income")
+
+        expenseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var grandTotal = 0.0
+                for (operationSnapshot in snapshot.children) {
+                    val subTotal = operationSnapshot.child("total").getValue(Double::class.java) ?: 0.0
+                    grandTotal += subTotal
+                }
+                expenseRef.child("total").setValue(grandTotal)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error updating Expense total: ${error.message}")
+            }
+        })
     }
 }

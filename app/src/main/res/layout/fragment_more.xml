@@ -1,16 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.More">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.More"
+    android:scrollbars="vertical">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:textSize="36sp"
+    <LinearLayout
+        android:id="@+id/l1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="More Options"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="16dp"
+        android:padding="15dip">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/question1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/matt_green"
+            android:text="How can I add transactions manually?"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:drawableEnd="@drawable/baseline_arrow_drop_down_24"
+            android:drawableTint="#808080"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            />
+
+        <TextView
+            android:id="@+id/answer1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="First, tap the '+' button in the bottom navigation bar. Choose the transaction type (expense or income), select a category and enter the amount. You can add an optional description. Finally, tap 'Save Transaction' to record it. Your transaction history and reports will update automatically. Remember to double-check your entries for accuracy."
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/l2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        android:padding="15dip"
+        app:layout_constraintTop_toBottomOf="@id/l1">
+
+        <TextView
+            android:id="@+id/question2"
+            android:textColor="@color/matt_green"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="How can I check my past transaction data?"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:drawableEnd="@drawable/baseline_arrow_drop_down_24"
+            android:drawableTint="#808080"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/answer2"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="To help with that, you can select the month icon present on top left corner in the home page. Select required month of a year to get all transactions of that month specifically."
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/l3"
+        android:padding="15dip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/l2">
+
+        <TextView
+            android:id="@+id/question3"
+            android:layout_width="match_parent"
+            android:textColor="@color/matt_green"
+            android:layout_height="wrap_content"
+            android:text="Any Suggestions or Queries?"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:drawableEnd="@drawable/baseline_arrow_drop_down_24"
+            android:drawableTint="#808080"
+            android:padding="8dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/answer3"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="write to us at wisewallwtindia@gmail.com"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:padding="8dp"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -135,7 +135,7 @@ class LoginOtpActivity : AppCompatActivity() {
             otp.append(random.nextInt(10))
         }
         otpString = otp.toString()
-        Toast.makeText(applicationContext, "OTP thayar!", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(applicationContext, "OTP thayar!", Toast.LENGTH_SHORT).show()
         try {
             val smsManager = SmsManager.getDefault()
             smsManager.sendTextMessage(phoneNumber, null, "Your OTP is: $otpString", null, null)
