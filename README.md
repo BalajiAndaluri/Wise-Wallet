@@ -17,4 +17,6 @@
 
 ---
 ###Screenshots
-![SplashScreen]()
+![Splash](https://github.com/user-attachments/assets/c8ce9cc6-0e8a-467e-bf8f-83e8549db211)
+![Phone](https://github.com/user-attachments/assets/f6fa30ad-c0ef-42a0-b921-20b3fe9fbab7)
+![Otp](https://github.com/user-attachments/assets/a975371d-206e-4fd8-95d3-482a26b361e4)
